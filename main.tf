@@ -68,7 +68,7 @@ resource "google_compute_instance" "vm_mdt" {
   boot_disk {
     initialize_params {
       image       = "windows-cloud/windows-2019"
-      size        = "100"
+      size        = "50"
       type        = "pd-ssd"
     }
   }
