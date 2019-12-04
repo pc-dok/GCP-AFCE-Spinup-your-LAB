@@ -23,11 +23,11 @@ variable "vm-dc" {
     }
 
 variable "yourpublicip" {
-        default = "212.77.44.165"
+        default = "1.2.3.4"
     }
 
 variable "sharedsecret" {
-        default = "2vSzUTMsUXx5sJrn69TW8hBKguUoKWwN0tVoHgSKFN3sMVg8ZQJUwBESymGCzQBM"
+        default = "2342635463fgsrrt45634564536"
     }
 
 variable "cidr-gcp" {
