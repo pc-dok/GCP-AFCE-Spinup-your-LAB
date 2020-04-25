@@ -18,4 +18,5 @@
 ##### What you must edit:
 `````
 - variables.tf file must be edit with your variable names etc...
+- Passwords in the cloud.ps1 and dc1.ps1
 `````
