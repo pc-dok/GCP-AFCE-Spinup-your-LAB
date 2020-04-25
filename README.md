@@ -1,5 +1,4 @@
-##### Goal of this LAB:
- 
+##### Goal of this LAB: 
 - Demonstrate how easy you can use IAC and AFCE to spinup your LAB in every Cloud without needing the GUI.
 - I will not show or explain you what terraform or visual studio code is. You can google here everything.
 - For me terraform is the ideal way -to make Infrastructure as Code in a way what also a not code tekkie is
