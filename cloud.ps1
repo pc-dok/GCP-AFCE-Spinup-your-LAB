@@ -11,8 +11,8 @@ Add-WindowsFeature -Name "dns" -IncludeAllSubFeature -IncludeManagementTools
 Add-WindowsFeature -Name "gpmc" -IncludeAllSubFeature -IncludeManagementTools
 
 #Install Choco and install your favorite Software on your Server
-#Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')) 
-#choco install foxitreader microsoft-edge-insider 7zip --force -y
+Invoke-Expression ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')) 
+choco install foxitreader microsoft-edge 7zip --force -y
 
 #Create our Administrator Logins
 net user Administrator P@ssw0rd
@@ -44,6 +44,19 @@ $ProgressPreference = 'SilentlyContinue'
 Write-Verbose "Disable IE Security" -Verbose
 reg add "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}" /v IsInstalled /t REG_DWORD /d 0 /f
 reg add "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}" /v IsInstalled /t REG_DWORD /d 0 /f
+
+Write-Verbose "Disable IE First Time Run Wizard" -Verbose
+reg add "HKLM\Software\Policies\Microsoft\Internet Explorer\Main" /v DisableFirstRunCustomize /t REG_DWORD /d 1 /f
+
+Write-Verbose "Disable Server Manager and Admin Center Popup" -Verbose
+reg add HKLM\SOFTWARE\Microsoft\ServerManager /v DoNotOpenServerManagerAtLogon /t REG_DWORD /d 1 /f
+reg add HKCU\SOFTWARE\Microsoft\ServerManager /v DoNotOpenServerManagerAtLogon /t REG_DWORD /d 1 /f
+reg add HKLM\SOFTWARE\Microsoft\ServerManager\Oobe /v DoNotOpenInitialConfigurationTasksAtLogon /t REG_DWORD /d 1 /f
+reg add HKLM\SOFTWARE\Microsoft\ServerManager /v DoNotPopWACConsoleAtSMLaunch /t REG_DWORD /d 1 /f
+reg add HKCU\SOFTWARE\Microsoft\ServerManager /v DoNotPopWACConsoleAtSMLaunch /t REG_DWORD /d 1 /f
+
+Write-Verbose "Disable Windows Firewall" -Verbose
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
 
 # Windows ADK for Windows 10, version 1809
 $Vendor = "Microsoft"
@@ -148,16 +161,16 @@ Write-Verbose "Starting Installation of $Vendor $Product $Version" -Verbose
 (Start-Process msiexec.exe -ArgumentList $UnattendedArgs -Wait -Passthru).ExitCode
 
 # NotePad ++
-$Vendor = "Misc"
-$Product = "Notepad++"
-$Version = "7.8.1"
-$uri = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.1/npp.7.8.1.Installer.x64.exe"
-$PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
-$UnattendedArgs = '/S'
+#$Vendor = "Misc"
+#$Product = "Notepad++"
+#$Version = "7.8.1"
+#$uri = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.1/npp.7.8.1.Installer.x64.exe"
+#$PackageName = $uri.Substring($uri.LastIndexOf("/") + 1)
+#$UnattendedArgs = '/S'
 
-Invoke-WebRequest -Uri $uri -OutFile "$Source\$PackageName"
-Write-Verbose "Starting Installation of $Product $Version" -Verbose
-(Start-Process "$PackageName" $UnattendedArgs -Wait -Passthru).ExitCode
+#Invoke-WebRequest -Uri $uri -OutFile "$Source\$PackageName"
+#Write-Verbose "Starting Installation of $Product $Version" -Verbose
+#(Start-Process "$PackageName" $UnattendedArgs -Wait -Passthru).ExitCode
 
 Write-Verbose "Configuring Microsoft Deployment Toolkit" -Verbose
 
