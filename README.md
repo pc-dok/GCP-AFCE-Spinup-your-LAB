@@ -15,3 +15,7 @@
 -- IP Address and without NAT. It depends than on how many Server you will host. For 2-5 Servers
 -- i think you can take also External Addresses. When you want i can share also this example than.)
 `````
+##### What you must edit:
+`````
+- variables.tf file must be edit with your variable names etc...
+`````
