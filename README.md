@@ -19,4 +19,5 @@
 `````
 - variables.tf file must be edit with your variable names etc...
 - Passwords in the cloud.ps1 and dc1.ps1
+- rename dc1.tf.disabled to dc1.tf when MDT Server is up and running - than terraform apply
 `````
